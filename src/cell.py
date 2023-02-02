@@ -23,7 +23,10 @@ class Cell:
             "bottom": None
         }
         self.visited=False
-
+        if self.grid_index==0:
+            self.walls["left"]=False
+        if self.grid_index==rows*cols-1:
+            self.walls["right"]=False   
     def draw(self, win):
         self.x = self.col_index*self.cell_width
         self.y = self.row_index*self.cell_width
@@ -45,44 +48,42 @@ class Cell:
         if self.visited:
             pygame.draw.rect(win, BLUE, (self.x+1, self.y+1, self.cell_width-1, self.cell_width-1))
             pygame.display.update()
-            print(f"r:{self.row_index}, c:{self.col_index}, visited:{self.visited}")
+
 
     def check_neighbors(self, grid):
         neighbors=[]
 
-        if self.grid_index-cols >= 0 and self.grid_index-cols<cols*(rows-1):
+        if self.grid_index>cols-1:
             top = grid[self.grid_index-cols]
         else:
             top = None
-        if self.grid_index+cols >= 1 and self.grid_index+cols<cols*rows:
+        if self.grid_index<=cols*(rows-1)-1:
             bottom = grid[self.grid_index+cols]
         else:
             bottom=None
-        if self.grid_index-1 >= 0:
+        if self.grid_index not in [0,5,10,15,20]:
             left= grid[self.grid_index-1]
         else:
             left=None
-        if self.grid_index+1<cols*rows:
+        if self.grid_index not in [4,9,14,19,24]:
             right=grid[self.grid_index+1]
         else:
             right=None
 
-        if top and top.visited is False:
+        if top and top.visited == False:
             neighbors.append(top)
             print(f"top grid_index:{top.grid_index} row_index: {top.row_index} col_index:{top.col_index}")
-        if bottom and bottom.visited is False:
+        if bottom and bottom.visited == False:
             neighbors.append(bottom)
             print(f"bottom grid_index:{bottom.grid_index} row_index: {bottom.row_index} col_index:{bottom.col_index}")
-        if left and left.visited is False:
+        if left and left.visited == False:
             neighbors.append(left)
             print(f"left grid_index:{left.grid_index} row_index: {left.row_index} col_index:{left.col_index}")
-        if right and right.visited is False:
+        if right and right.visited == False:
             neighbors.append(right)
             print(f"right grid_index:{right.grid_index} row_index: {right.row_index} col_index:{right.col_index}")
         if len(neighbors)>0:
             chosen_neighbor = random.choice(neighbors)
-            chosen_neighbor.visited=True
-
             if chosen_neighbor == top:
                 #remove the top wall of current cell, and bottom wall of neighbor
                 self.walls["top"]= False
@@ -112,5 +113,8 @@ class Cell:
                 print(self.walls["right"])
                 print(chosen_neighbor.walls["left"])
             return chosen_neighbor
+
+
+            
     
        
