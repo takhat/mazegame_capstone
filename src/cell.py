@@ -10,24 +10,21 @@ class Cell:
         self.row_index=row_index
         self.col_index=col_index
         self.cell_width=cell_width
+        self.visited=False
         self.walls={
             "left": True,
             "right": True,
             "top":True,
             "bottom": True
         }
-        self.neighbors={
-            "left": None,
-            "right": None,
-            "top": None,
-            "bottom": None
-        }
-        self.visited=False
         if self.grid_index==0:
             self.walls["left"]=False
+
         if self.grid_index==rows*cols-1:
             self.walls["right"]=False   
+
     def draw(self, win):
+        """draws the walls of each cell."""
         self.x = self.col_index*self.cell_width
         self.y = self.row_index*self.cell_width
 
@@ -49,8 +46,8 @@ class Cell:
             pygame.draw.rect(win, BLUE, (self.x+1, self.y+1, self.cell_width-1, self.cell_width-1))
             pygame.display.update()
 
-
     def get_random_unvisited_neighbor(self, grid):
+        """Returns an unvisited neighbor chosen randomly. Removes walls between current cell and chosen neighbor."""
         neighbors=[]
 
         if self.row_index==0:
@@ -85,8 +82,10 @@ class Cell:
         if right and right.visited == False:
             neighbors.append(right)
             print(f"right grid_index:{right.grid_index} row_index: {right.row_index} col_index:{right.col_index}")
+        
         if len(neighbors)>0:
             chosen_neighbor = random.choice(neighbors)
+
             if chosen_neighbor == top:
                 #remove the top wall of current cell, and bottom wall of neighbor
                 self.walls["top"]= False
@@ -115,6 +114,7 @@ class Cell:
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
                 print(self.walls["right"])
                 print(chosen_neighbor.walls["left"])
+            
             return chosen_neighbor
 
 
