@@ -23,27 +23,27 @@ class Cell:
         if self.grid_index==rows*cols-1:
             self.walls["right"]=False   
 
-    def draw(self, win):
+    def draw(self, canvas):
         """draws the walls of each cell."""
         self.x = self.col_index*self.cell_width
         self.y = self.row_index*self.cell_width
 
         if self.walls["left"]:
             #line(surface, color, start_pos, end_pos)
-            pygame.draw.line(win, WHITE, (self.x, self.y),(self.x,self.y+self.cell_width))
+            pygame.draw.line(canvas, WHITE, (self.x, self.y),(self.x,self.y+self.cell_width))
             pygame.display.update()
         if self.walls["right"]:
-            pygame.draw.line(win, WHITE, (self.x+self.cell_width, self.y),(self.x+self.cell_width,self.y+self.cell_width))
+            pygame.draw.line(canvas, WHITE, (self.x+self.cell_width, self.y),(self.x+self.cell_width,self.y+self.cell_width))
             pygame.display.update()
         if self.walls["top"]:
-            pygame.draw.line(win, WHITE, (self.x, self.y),(self.x+self.cell_width, self.y))
+            pygame.draw.line(canvas, WHITE, (self.x, self.y),(self.x+self.cell_width, self.y))
             pygame.display.update()
         if self.walls["bottom"]:
-            pygame.draw.line(win, WHITE, (self.x, self.y+self.cell_width),(self.x+self.cell_width,self.y+self.cell_width))
+            pygame.draw.line(canvas, WHITE, (self.x, self.y+self.cell_width),(self.x+self.cell_width,self.y+self.cell_width))
             pygame.display.update()
 
         if self.visited:
-            pygame.draw.rect(win, BLUE, (self.x+1, self.y+1, self.cell_width-1, self.cell_width-1))
+            pygame.draw.rect(canvas, BLUE, (self.x+1, self.y+1, self.cell_width-1, self.cell_width-1))
             pygame.display.update()
 
     def get_random_unvisited_neighbor(self, grid):

@@ -1,8 +1,8 @@
 from cell import Cell
 
 class MazeGenerator:
-    def __init__(self, win, rows, cols, cell_width):
-        self.win=win
+    def __init__(self, canvas, rows, cols, cell_width):
+        self.canvas=canvas
         self.rows=rows
         self.cols=cols
         self.cell_width=cell_width
@@ -44,7 +44,7 @@ class MazeGenerator:
     def draw_maze(self):  
         """draws the maze."""
         for cell in self.grid:
-            cell.draw(self.win)
+            cell.draw(self.canvas)
 
 
     

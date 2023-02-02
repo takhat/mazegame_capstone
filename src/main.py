@@ -4,8 +4,8 @@ from cell import Cell
 from maze_generator import MazeGenerator
 
 # set up pygame window
-WIDTH = 505
-HEIGHT = 505
+WIDTH = 502
+HEIGHT = 510
 FPS = 3
 
 # Define colours
@@ -17,7 +17,7 @@ YELLOW = (255 ,255 ,0)
 # initalize Pygame
 pygame.init()
 pygame.mixer.init()
-win=pygame.display.set_mode((WIDTH, HEIGHT))
+canvas=pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Welcome to the maze game!')
 clock = pygame.time.Clock()
 
@@ -25,7 +25,7 @@ clock = pygame.time.Clock()
 cell_width = 50           
 cols, rows = 10,10
 
-mg = MazeGenerator(win=win,rows=rows, cols=cols, cell_width=cell_width)
+mg = MazeGenerator(canvas=canvas,rows=rows, cols=cols, cell_width=cell_width)
 mg.create_grid()
 mg.generate_maze()
 mg.draw_maze()
