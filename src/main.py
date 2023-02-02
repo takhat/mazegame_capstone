@@ -5,8 +5,8 @@ from cell import Cell
 from maze_generator import MazeGenerator
 
 # set up pygame window
-WIDTH = 253
-HEIGHT = 255
+WIDTH = 505
+HEIGHT = 505
 FPS = 3
 
 # Define colours
@@ -24,7 +24,7 @@ clock = pygame.time.Clock()
 
 ## setup maze variables
 cell_width = 50           
-cols, rows = 5, 5
+cols, rows = 10,10
 visited = []
 stack = []
 solution = {}
@@ -63,7 +63,7 @@ while len(stack)>0:
     # Pop a cell from the stack and make it a current cell
     current=stack.pop()
     # If the current cell has any neighbours which have not been visited
-    chosen = current.check_neighbors(grid) # Choose one of the unvisited neighbours
+    chosen = current.get_random_unvisited_neighbor(grid) # Choose one of the unvisited neighbours
     if chosen:                         # Remove the wall between the current cell and the chosen cell
     # Push the current cell to the stack
         stack.append(current)
@@ -75,6 +75,7 @@ while len(stack)>0:
 
 for cell in grid:
     cell.draw(win)
+
 for cell in visited:
     print(cell.grid_index)
 

@@ -3,7 +3,7 @@ import pygame
 
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
-cols, rows = 5, 5
+cols, rows = 10,10
 class Cell:
     def __init__(self, grid_index, row_index, col_index, cell_width):
         self.grid_index=grid_index
@@ -50,26 +50,29 @@ class Cell:
             pygame.display.update()
 
 
-    def check_neighbors(self, grid):
+    def get_random_unvisited_neighbor(self, grid):
         neighbors=[]
 
-        if self.grid_index>cols-1:
-            top = grid[self.grid_index-cols]
-        else:
+        if self.row_index==0:
             top = None
-        if self.grid_index<=cols*(rows-1)-1:
-            bottom = grid[self.grid_index+cols]
         else:
-            bottom=None
-        if self.grid_index not in [0,5,10,15,20]:
-            left= grid[self.grid_index-1]
-        else:
-            left=None
-        if self.grid_index not in [4,9,14,19,24]:
-            right=grid[self.grid_index+1]
-        else:
-            right=None
+            top = grid[self.grid_index-cols]
 
+        if self.row_index==rows-1:
+            bottom=None
+        else:
+            bottom = grid[self.grid_index+cols]
+      
+        if self.col_index == 0:
+            left=None
+        else:
+            left= grid[self.grid_index-1]
+
+        if self.col_index >= cols-1:
+            right=None
+        else:
+            right=grid[self.grid_index+1]
+            
         if top and top.visited == False:
             neighbors.append(top)
             print(f"top grid_index:{top.grid_index} row_index: {top.row_index} col_index:{top.col_index}")
