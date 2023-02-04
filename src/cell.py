@@ -1,9 +1,16 @@
 import random
 import pygame
 
+# Define colours
 WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
-cols, rows = 10,10
+GREEN = (202,248,128)#(0, 208, 130)
+BLUE = (2,3,129)
+YELLOW = (252,185,0,1)
+LIGHTPINK=(255,206,236)
+GREY=(169, 184, 195)
+
+cols, rows = 10, 10
+
 class Cell:
     def __init__(self, grid_index, row_index, col_index, cell_width):
         self.grid_index=grid_index
@@ -25,8 +32,8 @@ class Cell:
 
     def draw(self, canvas):
         """draws the walls of each cell."""
-        self.x = self.col_index*self.cell_width
-        self.y = self.row_index*self.cell_width
+        self.x = (self.col_index*self.cell_width)+self.cell_width
+        self.y = (self.row_index*self.cell_width)+self.cell_width
 
         if self.walls["left"]:
             #line(surface, color, start_pos, end_pos)
@@ -116,6 +123,9 @@ class Cell:
                 print(chosen_neighbor.walls["left"])
             
             return chosen_neighbor
+    
+
+
 
 
             
