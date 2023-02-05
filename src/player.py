@@ -13,4 +13,5 @@ class Player(pygame.sprite.Sprite):
     def set_position(self, x, y):
         self.rect.x=x
         self.rect.y=y
+        
 

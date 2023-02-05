@@ -123,6 +123,8 @@ class Cell:
                 print(chosen_neighbor.walls["left"])
             
             return chosen_neighbor
+
+
     
 
 
