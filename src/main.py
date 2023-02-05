@@ -76,33 +76,57 @@ while running:
 
     if move_right:
         print("right key pressed")
-        player.set_position(player.rect.x+cell_width, player.rect.y)
-        print(player.rect.x, player.rect.y)
-        print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
-        mg.draw_maze()
-        all_sprites.draw(canvas)  
-        pygame.display.update()
+        x=player.rect.x
+        y=player.rect.y
+        current_cell = cell_dict[(x,y)]
+        if current_cell.walls["right"]:
+            print("movement not allowed")
+        else:
+            player.set_position(x+cell_width, y)
+            print(player.rect.x, player.rect.y)
+            print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
+            mg.draw_maze()
+            all_sprites.draw(canvas)  
+            pygame.display.update()
     if move_left:
         print("left key pressed")
-        player.set_position(player.rect.x-cell_width, player.rect.y)
-        print(player.rect.x, player.rect.y)
-        print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
-        mg.draw_maze()
-        all_sprites.draw(canvas) 
+        x=player.rect.x
+        y=player.rect.y
+        current_cell = cell_dict[(x,y)]
+        if current_cell.walls["left"]:
+            print("movement not allowed")
+        else:
+            player.set_position(player.rect.x-cell_width, player.rect.y)
+            print(player.rect.x, player.rect.y)
+            print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
+            mg.draw_maze()
+            all_sprites.draw(canvas) 
     if move_up:
         print("up key pressed")
-        player.set_position(player.rect.x, player.rect.y-cell_width)
-        print(player.rect.x, player.rect.y)
-        print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
-        mg.draw_maze()
-        all_sprites.draw(canvas) 
+        x=player.rect.x
+        y=player.rect.y
+        current_cell = cell_dict[(x,y)]
+        if current_cell.walls["top"]:
+            print("movement not allowed")
+        else:
+            player.set_position(player.rect.x, player.rect.y-cell_width)
+            print(player.rect.x, player.rect.y)
+            print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
+            mg.draw_maze()
+            all_sprites.draw(canvas) 
     if move_down:
         print("down key pressed")
-        player.set_position(player.rect.x, player.rect.y+cell_width)
-        print(player.rect.x, player.rect.y)
-        print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
-        mg.draw_maze()
-        all_sprites.draw(canvas) 
+        x=player.rect.x
+        y=player.rect.y
+        current_cell = cell_dict[(x,y)]
+        if current_cell.walls["bottom"]:
+            print("movement not allowed")
+        else:
+            player.set_position(player.rect.x, player.rect.y+cell_width)
+            print(player.rect.x, player.rect.y)
+            print(f"grid_index:{cell_dict[(player.rect.x,player.rect.y)].grid_index}")
+            mg.draw_maze()
+            all_sprites.draw(canvas) 
     pygame.display.flip()
         
     # keep running at the right speed
