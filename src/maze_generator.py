@@ -12,7 +12,7 @@ class MazeGenerator:
         self.stack=[]
     
     def create_grid(self):
-        """makes cells and positions them in a grid."""
+        """makes cells and positions them in a 1D list called grid."""
         index=0
         for row in range(self.rows):
             for col in range(self.cols):

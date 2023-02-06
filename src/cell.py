@@ -9,7 +9,7 @@ YELLOW = (252,185,0,1)
 LIGHTPINK=(255,206,236)
 GREY=(169, 184, 195)
 
-cols, rows = 10, 10
+cols, rows = 15, 15
 
 class Cell:
     def __init__(self, grid_index, row_index, col_index, cell_width):
@@ -54,7 +54,7 @@ class Cell:
             pygame.display.update()
 
     def get_random_unvisited_neighbor(self, grid):
-        """Returns an unvisited neighbor chosen randomly. Removes walls between current cell and chosen neighbor."""
+        """returns an unvisited neighbor chosen randomly. Removes walls between current cell and chosen neighbor."""
         neighbors=[]
 
         if self.row_index==0:
