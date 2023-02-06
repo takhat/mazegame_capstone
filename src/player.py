@@ -1,5 +1,5 @@
 import pygame
-cell_width=45
+from constants import *
 
 class Player(pygame.sprite.Sprite):
     """represents a player sprite."""

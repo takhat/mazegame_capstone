@@ -1,15 +1,6 @@
 import random
 import pygame
-
-# Define colours
-WHITE = (255, 255, 255)
-GREEN = (202,248,128)#(0, 208, 130)
-BLUE = (2,3,129)
-YELLOW = (252,185,0,1)
-LIGHTPINK=(255,206,236)
-GREY=(169, 184, 195)
-
-cols, rows = 15, 15
+from constants import *
 
 class Cell:
     def __init__(self, grid_index, row_index, col_index, cell_width):

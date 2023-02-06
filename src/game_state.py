@@ -1,12 +1,11 @@
 import pygame, sys
-
 from player import Player
+from constants import *
 
-# pygame.init()
 class GameState:
     """keeps track of state of the game: Start, Play, End."""
     def __init__(self, canvas, mg, sprite_group, player, cell_width, move_down, move_up, move_left, move_right):
-        self.state="main_game"
+        self.state="play_game"
         self.mg=mg
         self.grid=self.mg.grid
         self.cell_dict={}
@@ -19,14 +18,15 @@ class GameState:
         self.move_left=move_left
         self.move_right=move_right
 
-        for cell in mg.grid:
+        for cell in self.grid:
             self.cell_dict[(cell.x, cell.y)]=cell
         
     def main_game(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+                pygame.quit()
+                sys.exit()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     self.move_right=True
@@ -87,11 +87,44 @@ class GameState:
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
-        current_cell = self.cell_dict[(self.player.rect.x,self.player.rect.y)]
-        # if current_cell.grid_index==len(grid)-1:
-        #     print("Congrats!")
         pygame.display.flip()
-    
+        current_cell = self.cell_dict[(self.player.rect.x,self.player.rect.y)]
+        if current_cell.grid_index==len(self.grid)-1:
+            print("game over")
+            self.state="game_over"
+            self.game_over()
+            
     def redraw_game_window(self):
         self.mg.draw_maze()
-        self.all_sprites.draw(self.canvas)           
+        self.all_sprites.draw(self.canvas)   
+
+    def game_over(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        self.canvas.fill((0,0,0))
+        font=pygame.font.SysFont("arial", 30)
+        title=font.render("Congratulations! You win!", True, (255,255,255))
+        restart_button=font.render("R: Restart", True, (255,255,255))
+        quit_button=font.render("Q: Quit", True, (255,255,255))
+        self.canvas.blit(title, (width//2 -title.get_width()//2, height//2 -title.get_height()//3))
+        self.canvas.blit(restart_button, (width//2 -restart_button.get_width()//2, height//1.9 -restart_button.get_height()))
+        self.canvas.blit(quit_button, (width//2 - quit_button.get_width()//2, height//2 + quit_button.get_height()//2))
+        pygame.display.update()
+
+    def state_manager(self):
+        if self.state=="game_over":
+            self.game_over()
+            keys=pygame.key.get_pressed()
+            if keys[pygame.K_r]:
+                print("r key pressed to restart game")
+                
+            if keys[pygame.K_q]:
+                print("q key pressed to quit game")
+                pygame.quit()
+                sys.exit()
+
+        elif self.state=="play_game":
+            self.main_game()
+
