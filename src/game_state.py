@@ -2,9 +2,10 @@ import pygame, sys
 from player import Player
 from constants import *
 
+
 class GameState:
     """keeps track of state of the game: Start, Play, End."""
-    def __init__(self, canvas, mg, sprite_group, player, cell_width, move_down, move_up, move_left, move_right):
+    def __init__(self, mg, canvas, sprite_group, player, cell_width):
         self.state="play_game"
         self.mg=mg
         self.grid=self.mg.grid
@@ -13,10 +14,10 @@ class GameState:
         self.player=player
         self.cell_width=cell_width
         self.canvas=canvas
-        self.move_down=move_down
-        self.move_up=move_up
-        self.move_left=move_left
-        self.move_right=move_right
+        self.move_down=False
+        self.move_up=False
+        self.move_left=False
+        self.move_right=False
 
         for cell in self.grid:
             self.cell_dict[(cell.x, cell.y)]=cell
@@ -106,10 +107,10 @@ class GameState:
         self.canvas.fill((0,0,0))
         font=pygame.font.SysFont("arial", 30)
         title=font.render("Congratulations! You win!", True, (255,255,255))
-        restart_button=font.render("R: Restart", True, (255,255,255))
+        # restart_button=font.render("R: Restart", True, (255,255,255))
         quit_button=font.render("Q: Quit", True, (255,255,255))
         self.canvas.blit(title, (width//2 -title.get_width()//2, height//2 -title.get_height()//3))
-        self.canvas.blit(restart_button, (width//2 -restart_button.get_width()//2, height//1.9 -restart_button.get_height()))
+        # self.canvas.blit(restart_button, (width//2 -restart_button.get_width()//2, height//1.9 -restart_button.get_height()))
         self.canvas.blit(quit_button, (width//2 - quit_button.get_width()//2, height//2 + quit_button.get_height()//2))
         pygame.display.update()
 
@@ -119,7 +120,7 @@ class GameState:
             keys=pygame.key.get_pressed()
             if keys[pygame.K_r]:
                 print("r key pressed to restart game")
-                
+                self.state="restart_game"
             if keys[pygame.K_q]:
                 print("q key pressed to quit game")
                 pygame.quit()
@@ -127,4 +128,13 @@ class GameState:
 
         elif self.state=="play_game":
             self.main_game()
+        
+        elif self.state=="restart_game":
+            self.canvas.fill((0,0,0))
+            
+
+
+
+
+
 

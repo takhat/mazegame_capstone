@@ -18,7 +18,7 @@ class Cell:
         if self.grid_index==0:
             self.walls["left"]=False
 
-        if self.grid_index==rows*cols-1:
+        if self.grid_index==ROWS*COLS-1:
             self.walls["right"]=False   
 
     def draw(self, canvas):
@@ -51,19 +51,19 @@ class Cell:
         if self.row_index==0:
             top = None
         else:
-            top = grid[self.grid_index-cols]
+            top = grid[self.grid_index-COLS]
 
-        if self.row_index==rows-1:
+        if self.row_index==ROWS-1:
             bottom=None
         else:
-            bottom = grid[self.grid_index+cols]
+            bottom = grid[self.grid_index+COLS]
       
         if self.col_index == 0:
             left=None
         else:
             left= grid[self.grid_index-1]
 
-        if self.col_index >= cols-1:
+        if self.col_index >= COLS-1:
             right=None
         else:
             right=grid[self.grid_index+1]
