@@ -14,16 +14,23 @@ class GameState:
         self.move_left=False
         self.move_right=False
         self.new_game=True
+        self.start_screen=True
+        self.level=1
 
     def create_new_game(self):
         """initializes a new maze and sprite and displays it on canvas."""
         # initalize Pygame
         pygame.init()
         pygame.mixer.init()
-        pygame.display.set_caption('Welcome to the maze game!')
+        pygame.display.set_caption(f'Welcome to the maze game! Level {self.level}')
         
+
+        self.width = (cell_width*rows*self.level)+(2*cell_width) 
+        self.height = (cell_width*rows*self.level)+(2*cell_width)
+        self.canvas=pygame.display.set_mode((self.width, self.height))
+        print(f"level={self.level}")
         #Maze 
-        mg = MazeGenerator(canvas=CANVAS,rows=ROWS, cols=COLS, cell_width=CELL_WIDTH)
+        mg = MazeGenerator(canvas=self.canvas,rows=rows, cols=cols, cell_width=cell_width, level=self.level)
         mg.create_grid() 
         mg.generate_maze()
         mg.draw_maze()
@@ -33,17 +40,18 @@ class GameState:
         self.player = Player()
         self.all_sprites.add(self.player)
         self.player.set_position(mg.grid[0].x, mg.grid[0].y)
-        self.all_sprites.draw(CANVAS) 
+        self.all_sprites.draw(self.canvas) 
         self.mg=mg
         self.grid=mg.grid
         for cell in self.grid:
             self.cell_dict[(cell.x, cell.y)]=cell
-        self.canvas=CANVAS
+
 
     def main_game(self):
         """provides game playing functionality. Allows to navigate maze using arrow keys."""
         if self.new_game:
             self.create_new_game()
+            pygame.display.update()
             self.new_game=False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -76,7 +84,7 @@ class GameState:
             if current_cell.walls["right"] or current_cell.grid_index==len(self.grid)-1:
                 print("movement not allowed")
             else:
-                self.player.set_position(x+CELL_WIDTH, y)
+                self.player.set_position(x+cell_width, y)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -86,7 +94,7 @@ class GameState:
             if current_cell.walls["left"] or current_cell.grid_index==0:
                 print("movement not allowed")
             else:
-                self.player.set_position(self.player.rect.x-CELL_WIDTH, self.player.rect.y)
+                self.player.set_position(self.player.rect.x-cell_width, self.player.rect.y)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -96,7 +104,7 @@ class GameState:
             if current_cell.walls["top"]:
                 print("movement not allowed")
             else:
-                self.player.set_position(self.player.rect.x, self.player.rect.y-CELL_WIDTH)
+                self.player.set_position(self.player.rect.x, self.player.rect.y-cell_width)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -106,7 +114,7 @@ class GameState:
             if current_cell.walls["bottom"]:
                 print("movement not allowed")
             else:
-                self.player.set_position(self.player.rect.x, self.player.rect.y+CELL_WIDTH)
+                self.player.set_position(self.player.rect.x, self.player.rect.y+cell_width)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -129,13 +137,14 @@ class GameState:
                 pygame.quit()
                 sys.exit()
         self.canvas.fill((0,0,0))
-        font=pygame.font.SysFont("arial", 30)
-        title=font.render("Congratulations! You win!", True, (255,255,255))
-        restart_button=font.render("R: Restart", True, (255,255,255))
+        font=pygame.font.SysFont("arial", 18)
+        title=font.render(f"Congratulations! You won Level {self.level}!", True, (255,255,255))
+        restart_button=font.render("N: Next Level", True, (255,255,255))
         quit_button=font.render("Q: Quit", True, (255,255,255))
-        self.canvas.blit(title, (width//2 - title.get_width()//2, height//2 - title.get_height()*2))
-        self.canvas.blit(restart_button, (width//2 -restart_button.get_width()//2, height//1.9 -restart_button.get_height()))
-        self.canvas.blit(quit_button, (width//2 - quit_button.get_width()//2, height//2 + quit_button.get_height()//2))
+        self.canvas.blit(title, (self.width//2 - title.get_width()//2, self.height//2 - title.get_height()*2))
+        if self.level<3:
+            self.canvas.blit(restart_button, (self.width//2 -restart_button.get_width()//2, self.height//1.5 -restart_button.get_height()))
+        self.canvas.blit(quit_button, (self.width//2 - quit_button.get_width()//2, self.height//2 + quit_button.get_height()//2))
         pygame.display.update()
 
     def state_manager(self):
@@ -143,9 +152,9 @@ class GameState:
         if self.state=="game_over":
             self.game_over()
             keys=pygame.key.get_pressed()
-            if keys[pygame.K_r]:
-                print("r key pressed to restart game")
-                self.state="restart_game"
+            if keys[pygame.K_n] and self.level<3:
+                print("n key pressed to generate next level game")
+                self.state="new_game"
             if keys[pygame.K_q]:
                 print("q key pressed to quit game")
                 pygame.quit()
@@ -154,7 +163,7 @@ class GameState:
         elif self.state=="play_game":
             self.main_game()
         
-        elif self.state=="restart_game":
+        elif self.state=="new_game":
             self.canvas.fill((0,0,0))
             self.state="play_game"
             self.cell_dict={}
@@ -163,7 +172,12 @@ class GameState:
             self.move_left=False
             self.move_right=False
             self.new_game=True
+            self.level+=1
             self.state="play_game"
+        
+            
+            
+            
 
 
 

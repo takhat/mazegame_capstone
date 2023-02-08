@@ -2,21 +2,23 @@ from cell import Cell
 
 class MazeGenerator:
     """helps to create and position cells inside a grid, and generate and draw a maze from the grid."""
-    def __init__(self, canvas, rows, cols, cell_width):
+    def __init__(self, canvas, rows, cols, cell_width, level):
         self.canvas=canvas
-        self.rows=rows
-        self.cols=cols
+        self.level=level
+        self.rows=rows*level
+        self.cols=cols*level
         self.cell_width=cell_width
         self.grid=[]
         # self.visited=[]
         self.stack=[]
+
     
     def create_grid(self):
         """makes cells and positions them in a 1D list called grid."""
         index=0
         for row in range(self.rows):
             for col in range(self.cols):
-                cell = Cell(grid_index=index,row_index=row, col_index=col, cell_width=self.cell_width)
+                cell = Cell(grid_index=index,row_index=row, col_index=col, cell_width=self.cell_width,canvas=self.canvas, level=self.level)
                 self.grid.append(cell)
                 index+=1
         
