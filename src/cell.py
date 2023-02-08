@@ -23,11 +23,12 @@ class Cell:
 
         if self.grid_index==self.rows*self.cols-1:
             self.walls["right"]=False   
-
-    def draw(self, canvas):
-        """draws the walls of each cell."""
+        
         self.x = (self.col_index*self.cell_width)+self.cell_width
         self.y = (self.row_index*self.cell_width)+self.cell_width
+
+    def draw(self):
+        """draws the walls of each cell."""
 
         if self.walls["left"]:
             #line(surface, color, start_pos, end_pos)
@@ -86,7 +87,6 @@ class Cell:
         
         if len(neighbors)>0:
             chosen_neighbor = random.choice(neighbors)
-
             if chosen_neighbor == top:
                 #remove the top wall of current cell, and bottom wall of neighbor
                 self.walls["top"]= False
@@ -94,6 +94,7 @@ class Cell:
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
                 print(self.walls["top"])
                 print(chosen_neighbor.walls["bottom"])
+
             if chosen_neighbor == bottom:
                 #remove the bottom wall of current cell, and top wall of neighbor
                 self.walls["bottom"]= False
@@ -101,6 +102,7 @@ class Cell:
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
                 print(self.walls["bottom"])
                 print(chosen_neighbor.walls["top"])
+
             if chosen_neighbor == left:
                 #remove the left wall of current cell, and right wall of neighbor
                 self.walls["left"]= False
@@ -108,6 +110,7 @@ class Cell:
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
                 print(self.walls["left"])
                 print(chosen_neighbor.walls["right"])
+
             if chosen_neighbor == right:
                 #remove the right wall of current cell, and left wall of neighbor
                 self.walls["right"]= False
@@ -115,8 +118,13 @@ class Cell:
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
                 print(self.walls["right"])
                 print(chosen_neighbor.walls["left"])
-            
+          
             return chosen_neighbor
+        
+
+            
+
+
 
 
     

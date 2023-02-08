@@ -16,6 +16,7 @@ class GameState:
         self.new_game=True
         self.start_screen=True
         self.level=1
+        self.display_solution=False
 
     def create_new_game(self):
         """initializes a new maze and sprite and displays it on canvas."""
@@ -24,11 +25,10 @@ class GameState:
         pygame.mixer.init()
         pygame.display.set_caption(f'Welcome to the maze game! Level {self.level}')
         
-
         self.width = (cell_width*rows*self.level)+(2*cell_width) 
         self.height = (cell_width*rows*self.level)+(2*cell_width)
         self.canvas=pygame.display.set_mode((self.width, self.height))
-        print(f"level={self.level}")
+
         #Maze 
         mg = MazeGenerator(canvas=self.canvas,rows=rows, cols=cols, cell_width=cell_width, level=self.level)
         mg.create_grid() 
@@ -45,20 +45,23 @@ class GameState:
         self.grid=mg.grid
         for cell in self.grid:
             self.cell_dict[(cell.x, cell.y)]=cell
-
-
+    
     def main_game(self):
         """provides game playing functionality. Allows to navigate maze using arrow keys."""
         if self.new_game:
             self.create_new_game()
-            pygame.display.update()
             self.new_game=False
+        if self.display_solution:
+            self.mg.draw_solution(self.level*rows*cell_width, self.level*rows*cell_width)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_h:
+                    self.display_solution=True
                 if event.key == pygame.K_RIGHT:
                     self.move_right=True
                 if event.key == pygame.K_LEFT:
@@ -67,6 +70,7 @@ class GameState:
                     self.move_up=True
                 if event.key == pygame.K_DOWN:
                     self.move_down=True
+                
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
                     self.move_right=False
@@ -76,6 +80,7 @@ class GameState:
                     self.move_up=False
                 if event.key == pygame.K_DOWN:
                     self.move_down=False
+                
         x=self.player.rect.x
         y=self.player.rect.y
         current_cell = self.cell_dict[(x,y)]
@@ -118,6 +123,7 @@ class GameState:
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
+        
         pygame.display.flip()
         current_cell = self.cell_dict[(self.player.rect.x,self.player.rect.y)]
         if current_cell.grid_index==len(self.grid)-1:
@@ -129,6 +135,7 @@ class GameState:
         """helper method to display the maze and the sprite on canvas."""
         self.mg.draw_maze()
         self.all_sprites.draw(self.canvas)    
+
 
     def game_over(self):
         """displays end-game screen."""
@@ -174,6 +181,7 @@ class GameState:
             self.new_game=True
             self.level+=1
             self.state="play_game"
+            self.display_solution=False
         
             
             
