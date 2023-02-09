@@ -1,6 +1,6 @@
 import pygame
 from cell import Cell
-YELLOW = (252,185,0,1)
+from constants import *
 
 class MazeGenerator:
     """helps to create and position cells inside a grid, and generate and draw a maze from the grid."""
@@ -53,10 +53,11 @@ class MazeGenerator:
             cell.draw()
         
     def draw_solution(self, x, y):
-        pygame.draw.rect(self.canvas, YELLOW, (x+8, y+8, 5, 5))
+        pygame.draw.rect(self.canvas, LIGHTPINK, (x+8, y+8, 5, 5))
         while (x, y) != (self.cell_width, self.cell_width):
             (x, y) = self.solution[(x, y)]
-            pygame.draw.rect(self.canvas, YELLOW, (x+8, y+8, 5, 5))
+            pygame.draw.rect(self.canvas, LIGHTPINK, (x+8, y+8, 5, 5))
+
 
    
 

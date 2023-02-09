@@ -15,8 +15,8 @@ class GameState:
         self.move_right=False
         self.new_game=True
         self.start_screen=True
-        self.level=1
         self.display_solution=False
+        self.level=1
 
     def create_new_game(self):
         """initializes a new maze and sprite and displays it on canvas."""
@@ -50,18 +50,14 @@ class GameState:
         """provides game playing functionality. Allows to navigate maze using arrow keys."""
         if self.new_game:
             self.create_new_game()
-            self.new_game=False
-        if self.display_solution:
-            self.mg.draw_solution(self.level*rows*cell_width, self.level*rows*cell_width)
-
+            self.new_game=False  
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_h:
-                    self.display_solution=True
                 if event.key == pygame.K_RIGHT:
                     self.move_right=True
                 if event.key == pygame.K_LEFT:
@@ -70,6 +66,9 @@ class GameState:
                     self.move_up=True
                 if event.key == pygame.K_DOWN:
                     self.move_down=True
+                if event.key == pygame.K_h:
+                    self.mg.draw_solution(self.level*rows*cell_width, self.level*rows*cell_width)
+                    self.display_solution=True
                 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
@@ -134,8 +133,7 @@ class GameState:
     def redraw_game_window(self):
         """helper method to display the maze and the sprite on canvas."""
         self.mg.draw_maze()
-        self.all_sprites.draw(self.canvas)    
-
+        self.all_sprites.draw(self.canvas)  
 
     def game_over(self):
         """displays end-game screen."""
@@ -153,6 +151,7 @@ class GameState:
             self.canvas.blit(restart_button, (self.width//2 -restart_button.get_width()//2, self.height//1.5 -restart_button.get_height()))
         self.canvas.blit(quit_button, (self.width//2 - quit_button.get_width()//2, self.height//2 + quit_button.get_height()//2))
         pygame.display.update()
+
 
     def state_manager(self):
         """allows functionality based on game state."""
@@ -182,6 +181,13 @@ class GameState:
             self.level+=1
             self.state="play_game"
             self.display_solution=False
+        
+
+
+
+
+
+
         
             
             

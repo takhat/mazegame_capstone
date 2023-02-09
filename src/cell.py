@@ -29,6 +29,9 @@ class Cell:
 
     def draw(self):
         """draws the walls of each cell."""
+        if self.visited:
+            pygame.draw.rect(self.canvas, BLUE, (self.x, self.y, self.cell_width, self.cell_width))
+            pygame.display.update()
 
         if self.walls["left"]:
             #line(surface, color, start_pos, end_pos)
@@ -44,9 +47,6 @@ class Cell:
             pygame.draw.line(self.canvas, WHITE, (self.x, self.y+self.cell_width),(self.x+self.cell_width,self.y+self.cell_width))
             pygame.display.update()
 
-        if self.visited:
-            pygame.draw.rect(self.canvas, BLUE, (self.x+1, self.y+1, self.cell_width-1, self.cell_width-1))
-            pygame.display.update()
 
     def get_random_unvisited_neighbor(self, grid):
         """returns an unvisited neighbor chosen randomly. Removes walls between current cell and chosen neighbor."""
