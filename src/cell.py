@@ -12,6 +12,7 @@ class Cell:
         self.visited=False
         self.rows=rows*level
         self.cols=cols*level
+        self.level=level
         self.walls={
             "left": True,
             "right": True,
@@ -26,26 +27,28 @@ class Cell:
         
         self.x = (self.col_index*self.cell_width)+self.cell_width
         self.y = (self.row_index*self.cell_width)+self.cell_width
+        self.is_solution_cell=False
 
     def draw(self):
         """draws the walls of each cell."""
         if self.visited:
-            pygame.draw.rect(self.canvas, BLUE, (self.x, self.y, self.cell_width, self.cell_width))
-            pygame.display.update()
+            pygame.draw.rect(self.canvas, ADACOLORS[self.level-1], (self.x, self.y, self.cell_width, self.cell_width))
+        
+        if self.is_solution_cell:
+            pygame.draw.rect(self.canvas, LIGHTPINK, (self.x+8, self.y+8, 5, 5))
 
         if self.walls["left"]:
             #line(surface, color, start_pos, end_pos)
             pygame.draw.line(self.canvas, WHITE, (self.x, self.y),(self.x,self.y+self.cell_width))
-            pygame.display.update()
+
         if self.walls["right"]:
             pygame.draw.line(self.canvas, WHITE, (self.x+self.cell_width, self.y),(self.x+self.cell_width,self.y+self.cell_width))
-            pygame.display.update()
+
         if self.walls["top"]:
             pygame.draw.line(self.canvas, WHITE, (self.x, self.y),(self.x+self.cell_width, self.y))
-            pygame.display.update()
+
         if self.walls["bottom"]:
             pygame.draw.line(self.canvas, WHITE, (self.x, self.y+self.cell_width),(self.x+self.cell_width,self.y+self.cell_width))
-            pygame.display.update()
 
 
     def get_random_unvisited_neighbor(self, grid):
@@ -92,32 +95,24 @@ class Cell:
                 self.walls["top"]= False
                 chosen_neighbor.walls["bottom"]= False
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
-                print(self.walls["top"])
-                print(chosen_neighbor.walls["bottom"])
 
             if chosen_neighbor == bottom:
                 #remove the bottom wall of current cell, and top wall of neighbor
                 self.walls["bottom"]= False
                 chosen_neighbor.walls["top"]= False
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
-                print(self.walls["bottom"])
-                print(chosen_neighbor.walls["top"])
 
             if chosen_neighbor == left:
                 #remove the left wall of current cell, and right wall of neighbor
                 self.walls["left"]= False
                 chosen_neighbor.walls["right"]= False
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
-                print(self.walls["left"])
-                print(chosen_neighbor.walls["right"])
 
             if chosen_neighbor == right:
                 #remove the right wall of current cell, and left wall of neighbor
                 self.walls["right"]= False
                 chosen_neighbor.walls["left"]= False
                 print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
-                print(self.walls["right"])
-                print(chosen_neighbor.walls["left"])
           
             return chosen_neighbor
         

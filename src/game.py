@@ -14,6 +14,6 @@ gs= GameState()
 while True:
     gs.state_manager()
     # keep running at the right speed
-    clock.tick(FPS+20)
+    clock.tick(FPS)
     
     

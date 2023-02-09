@@ -66,10 +66,7 @@ class GameState:
                     self.move_up=True
                 if event.key == pygame.K_DOWN:
                     self.move_down=True
-                if event.key == pygame.K_h:
-                    self.mg.draw_solution(self.level*rows*cell_width, self.level*rows*cell_width)
-                    self.display_solution=True
-                
+                 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
                     self.move_right=False
@@ -79,9 +76,16 @@ class GameState:
                     self.move_up=False
                 if event.key == pygame.K_DOWN:
                     self.move_down=False
+                if event.key == pygame.K_SPACE:
+                    self.display_solution = True
+                    if self.display_solution:
+                        self.mg.draw_solution(self.level*rows*cell_width, self.level*rows*cell_width)
+                        self.all_sprites.draw(self.canvas) 
+
                 
         x=self.player.rect.x
         y=self.player.rect.y
+
         current_cell = self.cell_dict[(x,y)]
         if self.move_right:
             print("right key pressed")

@@ -14,6 +14,7 @@ class MazeGenerator:
         self.visited=[]
         self.stack=[]
         self.solution={}
+        self.cell_dict={}
     
     def create_grid(self):
         """makes cells and positions them in a 1D list called grid."""
@@ -40,8 +41,8 @@ class MazeGenerator:
             chosen = current.get_random_unvisited_neighbor(self.grid) # Choose one of the unvisited neighbours
             if chosen:   # Remove the wall between the current cell and the chosen cell
             # Push the current cell to the stack
-                self.solution[(chosen.x, chosen.y)]=current.x, current.y
                 self.stack.append(current)
+                self.solution[(chosen.x, chosen.y)]=current.x, current.y
                 # Mark the chosen cell as visited and push it to the stack
                 chosen.visited=True
                 self.visited.append(chosen)
@@ -51,12 +52,24 @@ class MazeGenerator:
         """draws the maze."""
         for cell in self.grid:
             cell.draw()
+            self.cell_dict[(cell.x, cell.y)] = cell
         
-    def draw_solution(self, x, y):
-        pygame.draw.rect(self.canvas, LIGHTPINK, (x+8, y+8, 5, 5))
+    def draw_solution(self, x, y): # draw a small rect starting from the last cell's x,y coordinates
         while (x, y) != (self.cell_width, self.cell_width):
-            (x, y) = self.solution[(x, y)]
-            pygame.draw.rect(self.canvas, LIGHTPINK, (x+8, y+8, 5, 5))
+            if (x, y) in self.cell_dict:
+                cell = self.cell_dict[(x, y)]
+                cell.is_solution_cell=True
+                cell.draw()
+            (x, y) = self.solution[(x, y)] #new value of x and y = prev cell's x, y coordinates
+            if (x, y) == (cell_width, cell_width):
+                cell = self.cell_dict[(x, y)]
+                cell.is_solution_cell=True
+                cell.draw()
+
+            
+            
+
+
 
 
    
