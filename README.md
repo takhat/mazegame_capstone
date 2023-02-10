@@ -2,6 +2,11 @@
 
 
 ## Instructions:
+
+Play the game on web browser | [Link](https://trinket.io/pygame/4124440db8?outputOnly=true)
+
+Alternately,
+
 1. Download a local copy of the code. | [How to](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 2. Open the project and use the following CLI commands inside the Terminal:
 * **python3 -m venv venv** (Creates a virtual environment).
