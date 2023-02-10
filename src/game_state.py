@@ -28,7 +28,7 @@ class GameState:
         self.width = (cell_width*rows*self.level)+(2*cell_width) 
         self.height = (cell_width*rows*self.level)+(2*cell_width)
         self.canvas=pygame.display.set_mode((self.width, self.height))
-
+        
         #Maze 
         mg = MazeGenerator(canvas=self.canvas,rows=rows, cols=cols, cell_width=cell_width, level=self.level)
         mg.create_grid() 
@@ -45,6 +45,10 @@ class GameState:
         self.grid=mg.grid
         for cell in self.grid:
             self.cell_dict[(cell.x, cell.y)]=cell
+        font=pygame.font.SysFont("arial", 14)
+        instructions=font.render("Arrow keys: Move | Space key: View Solution", True, WHITE)
+        self.canvas.blit(instructions, (self.width//2 - instructions.get_width()//2, 10))
+        pygame.display.update()
     
     def main_game(self):
         """provides game playing functionality. Allows to navigate maze using arrow keys."""
@@ -147,9 +151,9 @@ class GameState:
                 sys.exit()
         self.canvas.fill((0,0,0))
         font=pygame.font.SysFont("arial", 18)
-        title=font.render(f"Congratulations! You won Level {self.level}!", True, (255,255,255))
-        restart_button=font.render("N: Next Level", True, (255,255,255))
-        quit_button=font.render("Q: Quit", True, (255,255,255))
+        title=font.render(f"Congratulations! You won Level {self.level}!", True, WHITE)
+        restart_button=font.render("N: Next Level", True, WHITE)
+        quit_button=font.render("Q: Quit", True, WHITE)
         self.canvas.blit(title, (self.width//2 - title.get_width()//2, self.height//2 - title.get_height()*2))
         if self.level<3:
             self.canvas.blit(restart_button, (self.width//2 -restart_button.get_width()//2, self.height//1.5 -restart_button.get_height()))
