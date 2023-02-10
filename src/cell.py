@@ -3,12 +3,11 @@ import pygame
 from constants import *
 
 class Cell:
-    def __init__(self, grid_index, row_index, col_index, cell_width, canvas, level):
+    def __init__(self, grid_index, row_index, col_index, cell_width, level):
         self.grid_index=grid_index
         self.row_index=row_index
         self.col_index=col_index
         self.cell_width=cell_width
-        self.canvas=canvas
         self.visited=False
         self.rows=rows*level
         self.cols=cols*level
@@ -32,23 +31,23 @@ class Cell:
     def draw(self):
         """draws the walls of each cell."""
         if self.visited:
-            pygame.draw.rect(self.canvas, ADACOLORS[self.level-1], (self.x, self.y, self.cell_width, self.cell_width))
+            pygame.draw.rect(CANVAS, ADACOLORS[self.level-1], (self.x, self.y, self.cell_width, self.cell_width))
         
         if self.is_solution_cell:
-            pygame.draw.rect(self.canvas, LIGHTPINK, (self.x+8, self.y+8, 5, 5))
+            pygame.draw.rect(CANVAS, LIGHTPINK, (self.x+8, self.y+8, 5, 5))
 
         if self.walls["left"]:
             #line(surface, color, start_pos, end_pos)
-            pygame.draw.line(self.canvas, WHITE, (self.x, self.y),(self.x,self.y+self.cell_width))
+            pygame.draw.line(CANVAS, WHITE, (self.x, self.y),(self.x,self.y+self.cell_width))
 
         if self.walls["right"]:
-            pygame.draw.line(self.canvas, WHITE, (self.x+self.cell_width, self.y),(self.x+self.cell_width,self.y+self.cell_width))
+            pygame.draw.line(CANVAS, WHITE, (self.x+self.cell_width, self.y),(self.x+self.cell_width,self.y+self.cell_width))
 
         if self.walls["top"]:
-            pygame.draw.line(self.canvas, WHITE, (self.x, self.y),(self.x+self.cell_width, self.y))
+            pygame.draw.line(CANVAS, WHITE, (self.x, self.y),(self.x+self.cell_width, self.y))
 
         if self.walls["bottom"]:
-            pygame.draw.line(self.canvas, WHITE, (self.x, self.y+self.cell_width),(self.x+self.cell_width,self.y+self.cell_width))
+            pygame.draw.line(CANVAS, WHITE, (self.x, self.y+self.cell_width),(self.x+self.cell_width,self.y+self.cell_width))
 
 
     def get_random_unvisited_neighbor(self, grid):

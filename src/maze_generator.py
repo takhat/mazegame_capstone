@@ -4,8 +4,7 @@ from constants import *
 
 class MazeGenerator:
     """helps to create and position cells inside a grid, and generate and draw a maze from the grid."""
-    def __init__(self, canvas, rows, cols, cell_width, level):
-        self.canvas=canvas
+    def __init__(self, rows, cols, cell_width, level):
         self.level=level
         self.rows=rows*level
         self.cols=cols*level
@@ -21,7 +20,7 @@ class MazeGenerator:
         index=0
         for row in range(self.rows):
             for col in range(self.cols):
-                cell = Cell(grid_index=index,row_index=row, col_index=col, cell_width=self.cell_width,canvas=self.canvas, level=self.level)
+                cell = Cell(grid_index=index,row_index=row, col_index=col, cell_width=self.cell_width,level=self.level)
                 self.grid.append(cell)
                 index+=1
         
@@ -61,7 +60,7 @@ class MazeGenerator:
                 cell.is_solution_cell=True
                 cell.draw()
             (x, y) = self.solution[(x, y)] #new value of x and y = prev cell's x, y coordinates
-            if (x, y) == (cell_width, cell_width):
+            if (x, y) == (self.cell_width, self.cell_width):
                 cell = self.cell_dict[(x, y)]
                 cell.is_solution_cell=True
                 cell.draw()

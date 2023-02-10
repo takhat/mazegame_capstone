@@ -24,20 +24,20 @@ class GameState:
         pygame.init()
         pygame.mixer.init()
         pygame.display.set_caption(f'Welcome to the maze game! Level {self.level}')
-        
-        self.width = (cell_width*rows*self.level)+(2*cell_width) 
-        self.height = (cell_width*rows*self.level)+(2*cell_width)
-        self.canvas=pygame.display.set_mode((self.width, self.height))
-        
+        self.cell_width = width//(cols*self.level+2) 
+        # self.width = (cell_width*rows*self.level)+(2*cell_width) 
+        # self.height = (cell_width*rows*self.level)+(2*cell_width)
+        # self.canvas=pygame.display.set_mode((self.width, self.height))
+        self.canvas=CANVAS
         #Maze 
-        mg = MazeGenerator(canvas=self.canvas,rows=rows, cols=cols, cell_width=cell_width, level=self.level)
+        mg = MazeGenerator(rows=rows, cols=cols, cell_width=self.cell_width, level=self.level)
         mg.create_grid() 
         mg.generate_maze()
         mg.draw_maze()
 
         #Sprite/Player 
         self.all_sprites = pygame.sprite.Group()
-        self.player = Player()
+        self.player = Player(width=self.cell_width, height=self.cell_width)
         self.all_sprites.add(self.player)
         self.player.set_position(mg.grid[0].x, mg.grid[0].y)
         self.all_sprites.draw(self.canvas) 
@@ -47,7 +47,7 @@ class GameState:
             self.cell_dict[(cell.x, cell.y)]=cell
         font=pygame.font.SysFont("arial", 14)
         instructions=font.render("Arrow keys: Move | Space key: View Solution", True, WHITE)
-        self.canvas.blit(instructions, (self.width//2 - instructions.get_width()//2, 10))
+        self.canvas.blit(instructions, (width//2 - instructions.get_width()//2, 10))
         pygame.display.update()
     
     def main_game(self):
@@ -83,10 +83,9 @@ class GameState:
                 if event.key == pygame.K_SPACE:
                     self.display_solution = True
                     if self.display_solution:
-                        self.mg.draw_solution(self.level*rows*cell_width, self.level*rows*cell_width)
+                        self.mg.draw_solution(self.level*rows*self.cell_width, self.level*rows*self.cell_width)
                         self.all_sprites.draw(self.canvas) 
 
-                
         x=self.player.rect.x
         y=self.player.rect.y
 
@@ -96,7 +95,7 @@ class GameState:
             if current_cell.walls["right"] or current_cell.grid_index==len(self.grid)-1:
                 print("movement not allowed")
             else:
-                self.player.set_position(x+cell_width, y)
+                self.player.set_position(x+self.cell_width, y)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -106,7 +105,7 @@ class GameState:
             if current_cell.walls["left"] or current_cell.grid_index==0:
                 print("movement not allowed")
             else:
-                self.player.set_position(self.player.rect.x-cell_width, self.player.rect.y)
+                self.player.set_position(self.player.rect.x-self.cell_width, self.player.rect.y)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -116,7 +115,7 @@ class GameState:
             if current_cell.walls["top"]:
                 print("movement not allowed")
             else:
-                self.player.set_position(self.player.rect.x, self.player.rect.y-cell_width)
+                self.player.set_position(self.player.rect.x, self.player.rect.y-self.cell_width)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -126,7 +125,7 @@ class GameState:
             if current_cell.walls["bottom"]:
                 print("movement not allowed")
             else:
-                self.player.set_position(self.player.rect.x, self.player.rect.y+cell_width)
+                self.player.set_position(self.player.rect.x, self.player.rect.y+self.cell_width)
                 print(self.player.rect.x, self.player.rect.y)
                 print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
@@ -154,10 +153,10 @@ class GameState:
         title=font.render(f"Congratulations! You won Level {self.level}!", True, WHITE)
         restart_button=font.render("N: Next Level", True, WHITE)
         quit_button=font.render("Q: Quit", True, WHITE)
-        self.canvas.blit(title, (self.width//2 - title.get_width()//2, self.height//2 - title.get_height()*2))
+        self.canvas.blit(title, (width//2 - title.get_width()//2, height//2 - title.get_height()*2))
         if self.level<3:
-            self.canvas.blit(restart_button, (self.width//2 -restart_button.get_width()//2, self.height//1.5 -restart_button.get_height()))
-        self.canvas.blit(quit_button, (self.width//2 - quit_button.get_width()//2, self.height//2 + quit_button.get_height()//2))
+            self.canvas.blit(restart_button, (width//2 -restart_button.get_width()//2, height//1.5 -restart_button.get_height()))
+        self.canvas.blit(quit_button, (width//2 - quit_button.get_width()//2, height//2 + quit_button.get_height()//2))
         pygame.display.update()
 
 

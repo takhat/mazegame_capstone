@@ -3,7 +3,7 @@ from constants import *
 
 class Player(pygame.sprite.Sprite):
     """represents a player sprite."""
-    def __init__(self, width=cell_width, height = cell_width):
+    def __init__(self, width, height):
         super().__init__()
         self.image=pygame.Surface((width, height)) #creates a surface of a certain width & height
         self.image.fill((99,12,13))
