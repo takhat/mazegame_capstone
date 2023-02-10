@@ -1,5 +1,4 @@
-import random
-import pygame
+import pygame, random
 from constants import *
 
 class Cell:
@@ -76,16 +75,16 @@ class Cell:
             
         if top and top.visited == False:
             neighbors.append(top)
-            print(f"top grid_index:{top.grid_index} row_index: {top.row_index} col_index:{top.col_index}")
+            # print(f"top grid_index:{top.grid_index} row_index: {top.row_index} col_index:{top.col_index}")
         if bottom and bottom.visited == False:
             neighbors.append(bottom)
-            print(f"bottom grid_index:{bottom.grid_index} row_index: {bottom.row_index} col_index:{bottom.col_index}")
+            # print(f"bottom grid_index:{bottom.grid_index} row_index: {bottom.row_index} col_index:{bottom.col_index}")
         if left and left.visited == False:
             neighbors.append(left)
-            print(f"left grid_index:{left.grid_index} row_index: {left.row_index} col_index:{left.col_index}")
+            # print(f"left grid_index:{left.grid_index} row_index: {left.row_index} col_index:{left.col_index}")
         if right and right.visited == False:
             neighbors.append(right)
-            print(f"right grid_index:{right.grid_index} row_index: {right.row_index} col_index:{right.col_index}")
+            # print(f"right grid_index:{right.grid_index} row_index: {right.row_index} col_index:{right.col_index}")
         
         if len(neighbors)>0:
             chosen_neighbor = random.choice(neighbors)
@@ -93,31 +92,27 @@ class Cell:
                 #remove the top wall of current cell, and bottom wall of neighbor
                 self.walls["top"]= False
                 chosen_neighbor.walls["bottom"]= False
-                print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
+                # print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
 
             if chosen_neighbor == bottom:
                 #remove the bottom wall of current cell, and top wall of neighbor
                 self.walls["bottom"]= False
                 chosen_neighbor.walls["top"]= False
-                print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
+                # print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
 
             if chosen_neighbor == left:
                 #remove the left wall of current cell, and right wall of neighbor
                 self.walls["left"]= False
                 chosen_neighbor.walls["right"]= False
-                print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
+                # print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
 
             if chosen_neighbor == right:
                 #remove the right wall of current cell, and left wall of neighbor
                 self.walls["right"]= False
                 chosen_neighbor.walls["left"]= False
-                print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
+                # print(f"removing wall between grid cells {self.grid_index} and {chosen_neighbor.grid_index}")
           
             return chosen_neighbor
-        
-
-            
-
 
 
 

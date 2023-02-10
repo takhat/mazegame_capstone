@@ -24,11 +24,10 @@ class GameState:
         pygame.init()
         pygame.mixer.init()
         pygame.display.set_caption(f'Welcome to the maze game! Level {self.level}')
+        
         self.cell_width = width//(cols*self.level+2) 
-        # self.width = (cell_width*rows*self.level)+(2*cell_width) 
-        # self.height = (cell_width*rows*self.level)+(2*cell_width)
-        # self.canvas=pygame.display.set_mode((self.width, self.height))
         self.canvas=CANVAS
+
         #Maze 
         mg = MazeGenerator(rows=rows, cols=cols, cell_width=self.cell_width, level=self.level)
         mg.create_grid() 
@@ -45,7 +44,9 @@ class GameState:
         self.grid=mg.grid
         for cell in self.grid:
             self.cell_dict[(cell.x, cell.y)]=cell
-        font=pygame.font.SysFont("arial", 14)
+        
+        #Display game instructions
+        font=pygame.font.SysFont("arial", 16)
         instructions=font.render("Arrow keys: Move | Space key: View Solution", True, WHITE)
         self.canvas.blit(instructions, (width//2 - instructions.get_width()//2, 10))
         pygame.display.update()
@@ -96,8 +97,8 @@ class GameState:
                 print("movement not allowed")
             else:
                 self.player.set_position(x+self.cell_width, y)
-                print(self.player.rect.x, self.player.rect.y)
-                print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
+                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
 
         if self.move_left:
@@ -106,8 +107,8 @@ class GameState:
                 print("movement not allowed")
             else:
                 self.player.set_position(self.player.rect.x-self.cell_width, self.player.rect.y)
-                print(self.player.rect.x, self.player.rect.y)
-                print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
+                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
 
         if self.move_up:
@@ -116,8 +117,8 @@ class GameState:
                 print("movement not allowed")
             else:
                 self.player.set_position(self.player.rect.x, self.player.rect.y-self.cell_width)
-                print(self.player.rect.x, self.player.rect.y)
-                print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
+                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
 
         if self.move_down:
@@ -126,8 +127,8 @@ class GameState:
                 print("movement not allowed")
             else:
                 self.player.set_position(self.player.rect.x, self.player.rect.y+self.cell_width)
-                print(self.player.rect.x, self.player.rect.y)
-                print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
+                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
         
         pygame.display.flip()
