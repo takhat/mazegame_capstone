@@ -84,7 +84,7 @@ class GameState:
                 if event.key == pygame.K_SPACE:
                     self.display_solution = True
                     if self.display_solution:
-                        self.mg.draw_solution_DFS()#(self.level*rows*self.cell_width, self.level*rows*self.cell_width)
+                        self.mg.draw_solution_DFS()
                         self.all_sprites.draw(self.canvas) 
 
         x=self.player.rect.x

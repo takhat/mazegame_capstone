@@ -26,7 +26,7 @@ class MazeGenerator:
     def generate_maze(self):
         """generates a maze using randomized depth first search (Randomized DFS)."""
         # Choose the initial cell, mark it as visited and push it to the stack
-        initial = self.grid[cols]
+        initial = self.grid[self.cols-1]
         initial.visited=True
         self.visited.append(initial)
         self.stack.append(initial)
@@ -82,13 +82,13 @@ class MazeGenerator:
                 if d=="left" and not curr_cell.walls["left"] and curr_cell.grid_index>0:
                     child_cell=self.grid[curr_cell.grid_index-1]
                     print(f"left child: {child_cell.grid_index}")
-                elif d=="bottom" and not curr_cell.walls["bottom"]:
+                if d=="bottom" and not curr_cell.walls["bottom"]:
                     child_cell=self.grid[curr_cell.grid_index+self.cols]
                     print(f"bottom child: {child_cell.grid_index}")
-                elif d=="top" and not curr_cell.walls["top"]:
+                if d=="top" and not curr_cell.walls["top"]:
                     child_cell=self.grid[curr_cell.grid_index-self.cols]
                     print(f"top child: {child_cell.grid_index}")
-                elif d=="right" and not curr_cell.walls["right"] and curr_cell.grid_index<len(self.grid)-1:
+                if d=="right" and not curr_cell.walls["right"] and curr_cell.grid_index<len(self.grid)-1:
                     child_cell=self.grid[curr_cell.grid_index+1]
                     print(f"right child: {child_cell.grid_index}")
                 if not child_cell or child_cell in explored:

@@ -1,7 +1,7 @@
 import pygame
 
 # setup maze variables
-cols, rows = 3, 3          #cell class also uses cols, rows
+cols, rows = 15, 15         #cell class also uses cols, rows
 
 # set up pygame window
 width=580
