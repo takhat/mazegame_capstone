@@ -8,7 +8,7 @@ width=580
 height=580    
 CANVAS=pygame.display.set_mode((width, height))
 
-FPS = 15 #Frames Per Second
+FPS = 10 #Frames Per Second
 
 # Define colours
 WHITE = (255, 255, 255)

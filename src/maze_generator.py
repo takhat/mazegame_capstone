@@ -12,7 +12,7 @@ class MazeGenerator:
         self.grid=[]
         self.visited=[]
         self.stack=[]
-        self.cell_dict={}
+        # self.cell_dict={}
     
     def create_grid(self):
         """makes cells and positions them in a 1D list called grid."""
@@ -44,28 +44,12 @@ class MazeGenerator:
                 chosen.visited=True
                 self.visited.append(chosen)
                 self.stack.append(chosen)
-        #print(self.solution)
+
     def draw_maze(self):  
         """draws the maze."""
         for cell in self.grid:
             cell.draw()
-            self.cell_dict[(cell.x, cell.y)] = cell
-
-        
-    # def draw_solution(self, x, y): # draw a small rect starting from the last cell's x,y coordinates
-    #     while (x, y) != (self.cell_width, self.cell_width):
-    #         if (x, y) in self.cell_dict:
-    #             cell = self.cell_dict[(x, y)]
-    #             cell.is_solution_cell=True
-    #             cell.draw()
-    #         (x, y) = self.solution[(x, y)] #new value of x and y = prev cell's x, y coordinates
-    #         if (x, y) == (self.cell_width, self.cell_width):
-    #             cell = self.cell_dict[(x, y)]
-    #             cell.is_solution_cell=True
-    #             cell.draw()
-
-            
-
+            # self.cell_dict[(cell.x, cell.y)] = cell
 
     def draw_solution_DFS(self):
         dfs_path={}
@@ -101,6 +85,7 @@ class MazeGenerator:
         while cell != start:
             fwd_path[dfs_path[cell]]=cell
             cell.is_solution_cell=True
+            cell.draw()
             cell=dfs_path[cell]
         return fwd_path
 

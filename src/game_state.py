@@ -15,7 +15,7 @@ class GameState:
         self.move_right=False
         self.new_game=True
         self.start_screen=True
-        self.display_solution=False
+        # self.display_solution=False
         self.level=1
 
     def create_new_game(self):
@@ -82,11 +82,12 @@ class GameState:
                 if event.key == pygame.K_DOWN:
                     self.move_down=False
                 if event.key == pygame.K_SPACE:
-                    self.display_solution = True
-                    if self.display_solution:
+                    # self.display_solution = True
+                    # if self.display_solution:
                         self.mg.draw_solution_DFS()
                         self.all_sprites.draw(self.canvas) 
 
+                        
         x=self.player.rect.x
         y=self.player.rect.y
 
@@ -94,7 +95,7 @@ class GameState:
         if self.move_right:
             print("right key pressed")
             if current_cell.walls["right"] or current_cell.grid_index==len(self.grid)-1:
-                print("movement not allowed")
+                print("right movement is not allowed")
             else:
                 self.player.set_position(x+self.cell_width, y)
                 print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
@@ -104,7 +105,7 @@ class GameState:
         if self.move_left:
             print("left key pressed")
             if current_cell.walls["left"] or current_cell.grid_index==0:
-                print("movement not allowed")
+                print("left movement is not allowed")
             else:
                 self.player.set_position(self.player.rect.x-self.cell_width, self.player.rect.y)
                 print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
@@ -114,7 +115,7 @@ class GameState:
         if self.move_up:
             print("up key pressed")
             if current_cell.walls["top"]:
-                print("movement not allowed")
+                print("up movement is not allowed")
             else:
                 self.player.set_position(self.player.rect.x, self.player.rect.y-self.cell_width)
                 print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
@@ -124,7 +125,7 @@ class GameState:
         if self.move_down:
             print("down key pressed")
             if current_cell.walls["bottom"]:
-                print("movement not allowed")
+                print("down movement is not allowed")
             else:
                 self.player.set_position(self.player.rect.x, self.player.rect.y+self.cell_width)
                 print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
