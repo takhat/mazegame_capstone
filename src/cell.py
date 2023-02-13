@@ -1,4 +1,4 @@
-import pygame, random
+import pygame, random, time
 from constants import *
 
 class Cell:
@@ -25,15 +25,19 @@ class Cell:
         
         self.x = (self.col_index*self.cell_width)+self.cell_width
         self.y = (self.row_index*self.cell_width)+self.cell_width
+        self.is_dfs_cell=False
         self.is_solution_cell=False
+        self.count_visited=0
 
     def draw(self):
         """draws the walls of each cell."""
         if self.visited:
             pygame.draw.rect(CANVAS, ADACOLORS[self.level-1], (self.x, self.y, self.cell_width, self.cell_width))
         
-        if self.is_solution_cell:
-            pygame.draw.rect(CANVAS, LIGHTPINK, (self.x+8, self.y+8, 5, 5))
+        if self.is_solution_cell:#is_solution_cell:
+            pygame.draw.rect(CANVAS, YELLOW, (self.x+3, self.y+3, 3, 3))
+        if self.is_dfs_cell:#is_solution_cell:
+            pygame.draw.rect(CANVAS, GREEN, (self.x+3, self.y+3, 3, 3))
 
         if self.walls["left"]:
             #line(surface, color, start_pos, end_pos)

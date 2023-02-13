@@ -5,7 +5,7 @@ from constants import *
 
 
 class GameState:
-    """keeps track of state of the game: Play, End, Replay."""
+    """provides functionality according to the state of the game: Play, End, Replay."""
     def __init__(self):
         self.state="play_game"
         self.cell_dict={}
@@ -84,7 +84,7 @@ class GameState:
                 if event.key == pygame.K_SPACE:
                     self.display_solution = True
                     if self.display_solution:
-                        self.mg.draw_solution(self.level*rows*self.cell_width, self.level*rows*self.cell_width)
+                        self.mg.draw_solution_DFS()#(self.level*rows*self.cell_width, self.level*rows*self.cell_width)
                         self.all_sprites.draw(self.canvas) 
 
         x=self.player.rect.x
@@ -189,6 +189,10 @@ class GameState:
             self.level+=1
             self.state="play_game"
             self.display_solution=False
+        
+        elif self.state=="solve":
+            self.redraw_game_window()
+
         
 
 

@@ -1,14 +1,14 @@
 import pygame
 
 # setup maze variables
-cols, rows = 6, 6                #cell class also uses cols, rows
+cols, rows = 3, 3          #cell class also uses cols, rows
 
 # set up pygame window
 width=580
 height=580    
 CANVAS=pygame.display.set_mode((width, height))
 
-FPS = 10 #Frames Per Second
+FPS = 15 #Frames Per Second
 
 # Define colours
 WHITE = (255, 255, 255)
