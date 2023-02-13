@@ -95,6 +95,16 @@ class MazeGenerator:
                     continue
                 explored.add(child_cell)
                 frontier.append(child_cell)
+                dfs_path[child_cell]=curr_cell
+        fwd_path={}
+        cell = self.grid[0]
+        while cell != start:
+            fwd_path[dfs_path[cell]]=cell
+            cell.is_solution_cell=True
+            cell=dfs_path[cell]
+        return fwd_path
+
+
         
 
 
