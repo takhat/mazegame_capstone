@@ -27,7 +27,6 @@ class Cell:
         self.y = (self.row_index*self.cell_width)+self.cell_width
         # self.is_dfs_cell=False
         self.is_solution_cell=False
-        self.display_solution=False
 
 
     def draw(self):
@@ -35,13 +34,8 @@ class Cell:
         if self.visited:
             pygame.draw.rect(CANVAS, ADACOLORS[self.level-1], (self.x, self.y, self.cell_width, self.cell_width))
         
-        if self.is_solution_cell and self.display_solution:
-            if self.level==2:
-                pygame.draw.rect(CANVAS, GREEN, (self.x+(self.cell_width//3), self.y+(self.cell_width//3), self.cell_width//3, self.cell_width//3))
-            if self.level==1:
-                pygame.draw.rect(CANVAS, DARKPINK, (self.x+(self.cell_width//3), self.y+(self.cell_width//3), self.cell_width//3, self.cell_width//3))
-            if self.level==3:
-                pygame.draw.rect(CANVAS, BLUE, (self.x+(self.cell_width//3), self.y+(self.cell_width//3), self.cell_width//3, self.cell_width//3))
+        if self.is_solution_cell:
+            pygame.draw.rect(CANVAS, WHITE, (self.x+(self.cell_width//4), self.y+(self.cell_width//4), self.cell_width//4, self.cell_width//4))
 
         # if self.is_dfs_cell:
         #     pygame.draw.rect(CANVAS, ORANGE, (self.x+3, self.y+3, 3, 3))

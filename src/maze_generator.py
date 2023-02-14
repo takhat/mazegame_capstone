@@ -1,3 +1,4 @@
+import random
 import pygame
 from cell import Cell
 from constants import *
@@ -10,7 +11,6 @@ class MazeGenerator:
         self.cols=cols*level
         self.cell_width=cell_width
         self.grid=[]
-        self.visited=[]
         self.stack=[]
     
     def create_grid(self):
@@ -25,9 +25,8 @@ class MazeGenerator:
     def generate_maze(self):
         """generates a maze using randomized depth first search (Randomized DFS)."""
         # Choose the initial cell, mark it as visited and push it to the stack
-        initial = self.grid[self.cols-1]
+        initial = random.choice([self.grid[self.cols*(self.rows-1)], self.grid[self.cols-1]])
         initial.visited=True
-        self.visited.append(initial)
         self.stack.append(initial)
 
         # While the stack is not empty
@@ -41,7 +40,6 @@ class MazeGenerator:
                 self.stack.append(current)
                 # Mark the chosen cell as visited and push it to the stack
                 chosen.visited=True
-                self.visited.append(chosen)
                 self.stack.append(chosen)
 
     def draw_maze(self):  
@@ -83,13 +81,11 @@ class MazeGenerator:
         cell = self.grid[0]
         while cell != start:
             cell.is_solution_cell=True
-            cell.display_solution=True
             cell.draw()
             fwd_path[dfs_path[cell]]=cell
             cell=dfs_path[cell]
             if cell==self.grid[-1]:
                 cell.is_solution_cell=True
-                cell.display_solution=True
                 cell.draw()
         return fwd_path
 

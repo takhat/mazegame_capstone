@@ -2,10 +2,11 @@ import pygame, sys
 from maze_generator import MazeGenerator
 from player import Player
 from constants import *
+from button import *
 
 
 class GameState:
-    """provides functionality according to the state of the game: Play, End, Replay."""
+    """provides functionality according to the state of the game: Play, End, Next Level."""
     def __init__(self):
         self.state="play_game"
         self.cell_dict={}
@@ -18,7 +19,7 @@ class GameState:
         self.level=1
 
     def create_new_game(self):
-        """initializes a new maze and sprite and displays it on canvas."""
+        """initializes a new maze and sprite and displays them on canvas."""
         # initalize Pygame
         pygame.init()
         pygame.mixer.init()
@@ -43,10 +44,14 @@ class GameState:
         self.grid=mg.grid
         for cell in self.grid:
             self.cell_dict[(cell.x, cell.y)]=cell
+
+        #Solution Button
+        self.solution_button=Button("Show Solution", 0, 0)
+        self.solution_button.draw(self.canvas)
         
         #Display game instructions
         font=pygame.font.SysFont("arial", 14)
-        instructions=font.render("Press Arrow keys to Move | Space key to View Solution", True, WHITE)
+        instructions=font.render("Press Arrow keys to Move", True, WHITE)
         self.canvas.blit(instructions, (width//2 - instructions.get_width()//2, 3.5))
         pygame.display.update()
     
@@ -83,7 +88,14 @@ class GameState:
                 if event.key == pygame.K_SPACE:
                     self.mg.draw_solution_DFS()
                     self.all_sprites.draw(self.canvas) 
-                    
+            if event.type==pygame.MOUSEBUTTONDOWN:
+                if pygame.mouse.get_pressed()[0]:
+                    x,y = pygame.mouse.get_pos()
+                    if self.solution_button.rect.collidepoint(x,y):
+                        print("solution button pressed")
+                        self.mg.draw_solution_DFS()
+                        self.all_sprites.draw(self.canvas)
+ 
         x=self.player.rect.x
         y=self.player.rect.y
 
@@ -191,7 +203,7 @@ class GameState:
             self.new_game=True
             self.level+=1
             self.state="play_game"
-            self.display_solution=False
+
         
         elif self.state=="solve":
             self.redraw_game_window()
