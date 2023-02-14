@@ -51,7 +51,7 @@ class GameState:
         
         #Display game instructions
         font=pygame.font.SysFont("arial", 14)
-        instructions=font.render("Press Arrow keys to Move", True, WHITE)
+        instructions=font.render("Press Arrow keys to Move | Space bar or button to view solution", True, WHITE)
         self.canvas.blit(instructions, (width//2 - instructions.get_width()//2, 3.5))
         pygame.display.update()
     

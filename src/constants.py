@@ -1,7 +1,7 @@
 import pygame
 
 # setup maze variables
-cols, rows = 8, 8        #cell class also uses cols, rows
+cols, rows = 8, 8       #cell class also uses cols, rows
 
 # set up pygame window
 width=680 #trinket allows window size upto 600X600
