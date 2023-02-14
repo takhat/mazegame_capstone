@@ -49,7 +49,6 @@ class MazeGenerator:
         """draws the maze."""
         for cell in self.grid:
             cell.draw()
-            # self.cell_dict[(cell.x, cell.y)] = cell
 
     def draw_solution_DFS(self):
         dfs_path={}
@@ -60,34 +59,45 @@ class MazeGenerator:
             curr_cell=frontier.pop()
             if curr_cell==self.grid[0]:
                 break
-            print(f"curr cell:{curr_cell.grid_index}")
+            # print(f"curr cell:{curr_cell.grid_index}")
             for d in ["left", "bottom", "top", "right"]:
                 child_cell=None
                 if d=="left" and not curr_cell.walls["left"] and curr_cell.grid_index>0:
                     child_cell=self.grid[curr_cell.grid_index-1]
-                    print(f"left child: {child_cell.grid_index}")
+                    # print(f"left child: {child_cell.grid_index}")
                 if d=="bottom" and not curr_cell.walls["bottom"]:
                     child_cell=self.grid[curr_cell.grid_index+self.cols]
-                    print(f"bottom child: {child_cell.grid_index}")
+                    # print(f"bottom child: {child_cell.grid_index}")
                 if d=="top" and not curr_cell.walls["top"]:
                     child_cell=self.grid[curr_cell.grid_index-self.cols]
-                    print(f"top child: {child_cell.grid_index}")
+                    # print(f"top child: {child_cell.grid_index}")
                 if d=="right" and not curr_cell.walls["right"] and curr_cell.grid_index<len(self.grid)-1:
                     child_cell=self.grid[curr_cell.grid_index+1]
-                    print(f"right child: {child_cell.grid_index}")
+                    # print(f"right child: {child_cell.grid_index}")
                 if not child_cell or child_cell in explored:
                     continue
                 explored.add(child_cell)
                 frontier.append(child_cell)
                 dfs_path[child_cell]=curr_cell
+
+                
         fwd_path={}
         cell = self.grid[0]
         while cell != start:
-            fwd_path[dfs_path[cell]]=cell
             cell.is_solution_cell=True
+            cell.display_solution=True
             cell.draw()
+            fwd_path[dfs_path[cell]]=cell
             cell=dfs_path[cell]
+            if cell==self.grid[-1]:
+                cell.is_solution_cell=True
+                cell.display_solution=True
+                cell.draw()
         return fwd_path
+
+            
+
+
 
 
         

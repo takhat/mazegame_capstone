@@ -46,9 +46,9 @@ class GameState:
             self.cell_dict[(cell.x, cell.y)]=cell
         
         #Display game instructions
-        font=pygame.font.SysFont("arial", 16)
-        instructions=font.render("Arrow keys: Move | Space key: View Solution", True, WHITE)
-        self.canvas.blit(instructions, (width//2 - instructions.get_width()//2, 10))
+        font=pygame.font.SysFont("arial", 14)
+        instructions=font.render("Press Arrow keys to Move | Space key to View Solution", True, WHITE)
+        self.canvas.blit(instructions, (width//2 - instructions.get_width()//2, 3.5))
         pygame.display.update()
     
     def main_game(self):
@@ -84,10 +84,9 @@ class GameState:
                 if event.key == pygame.K_SPACE:
                     # self.display_solution = True
                     # if self.display_solution:
-                        self.mg.draw_solution_DFS()
-                        self.all_sprites.draw(self.canvas) 
-
-                        
+                    self.mg.draw_solution_DFS()
+                    self.all_sprites.draw(self.canvas) 
+                    
         x=self.player.rect.x
         y=self.player.rect.y
 
@@ -95,40 +94,40 @@ class GameState:
         if self.move_right:
             print("right key pressed")
             if current_cell.walls["right"] or current_cell.grid_index==len(self.grid)-1:
-                print("right movement is not allowed")
+                print("invalid movement")
             else:
                 self.player.set_position(x+self.cell_width, y)
-                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
                 # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
 
         if self.move_left:
             print("left key pressed")
             if current_cell.walls["left"] or current_cell.grid_index==0:
-                print("left movement is not allowed")
+                print("invalid movement")
             else:
                 self.player.set_position(self.player.rect.x-self.cell_width, self.player.rect.y)
-                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
                 # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
 
         if self.move_up:
             print("up key pressed")
             if current_cell.walls["top"]:
-                print("up movement is not allowed")
+                print("invalid movement")
             else:
                 self.player.set_position(self.player.rect.x, self.player.rect.y-self.cell_width)
-                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
                 # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
 
         if self.move_down:
             print("down key pressed")
             if current_cell.walls["bottom"]:
-                print("down movement is not allowed")
+                print("invalid movement")
             else:
                 self.player.set_position(self.player.rect.x, self.player.rect.y+self.cell_width)
-                print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
+                # print(f"current position: x: {self.player.rect.x} y: {self.player.rect.y}")
                 # print(f"grid_index:{self.cell_dict[(self.player.rect.x,self.player.rect.y)].grid_index}")
                 self.redraw_game_window()
         
@@ -151,11 +150,17 @@ class GameState:
                 pygame.quit()
                 sys.exit()
         self.canvas.fill((0,0,0))
-        font=pygame.font.SysFont("arial", 18)
+        font=pygame.font.SysFont("arial", 25)
+
         title=font.render(f"Congratulations! You won Level {self.level}!", True, WHITE)
+        title2=font.render(f"The best way out is always through!", True, WHITE)
+        title3=font.render(f"-Robert Frost", True, WHITE)
         restart_button=font.render("N: Next Level", True, WHITE)
         quit_button=font.render("Q: Quit", True, WHITE)
         self.canvas.blit(title, (width//2 - title.get_width()//2, height//2 - title.get_height()*2))
+        if self.level>2:
+            self.canvas.blit(title2, (width//2 - title2.get_width()//2, height//2 - title2.get_height()*5))
+            self.canvas.blit(title3, (width//2 - title3.get_width()//2, height//2 - title3.get_height()*4))
         if self.level<3:
             self.canvas.blit(restart_button, (width//2 -restart_button.get_width()//2, height//1.5 -restart_button.get_height()))
         self.canvas.blit(quit_button, (width//2 - quit_button.get_width()//2, height//2 + quit_button.get_height()//2))
