@@ -15,7 +15,6 @@ class GameState:
         self.move_right=False
         self.new_game=True
         self.start_screen=True
-        # self.display_solution=False
         self.level=1
 
     def create_new_game(self):
@@ -82,8 +81,6 @@ class GameState:
                 if event.key == pygame.K_DOWN:
                     self.move_down=False
                 if event.key == pygame.K_SPACE:
-                    # self.display_solution = True
-                    # if self.display_solution:
                     self.mg.draw_solution_DFS()
                     self.all_sprites.draw(self.canvas) 
                     

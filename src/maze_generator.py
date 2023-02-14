@@ -12,7 +12,6 @@ class MazeGenerator:
         self.grid=[]
         self.visited=[]
         self.stack=[]
-        # self.cell_dict={}
     
     def create_grid(self):
         """makes cells and positions them in a 1D list called grid."""
@@ -59,7 +58,7 @@ class MazeGenerator:
             curr_cell=frontier.pop()
             if curr_cell==self.grid[0]:
                 break
-            # print(f"curr cell:{curr_cell.grid_index}")
+
             for d in ["left", "bottom", "top", "right"]:
                 child_cell=None
                 if d=="left" and not curr_cell.walls["left"] and curr_cell.grid_index>0:
@@ -79,8 +78,7 @@ class MazeGenerator:
                 explored.add(child_cell)
                 frontier.append(child_cell)
                 dfs_path[child_cell]=curr_cell
-
-                
+     
         fwd_path={}
         cell = self.grid[0]
         while cell != start:

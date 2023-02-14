@@ -3,7 +3,7 @@
 
 ## Instructions:
 
-Play the game on web browser | [Link](https://trinket.io/pygame/4124440db8?outputOnly=true)
+Play the game on web browser | [Link](https://takhat014-gmail-com.trinket.io/sites/mazegame)
 
 Alternately,
 
