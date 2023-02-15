@@ -23,9 +23,4 @@ Alternately,
 |Apply Object Oriented Design Concepts|Created classes such as Cell (representing each cell inside a maze), Player (inherits from the built-in Sprite class), MazeGenerator (to create/display mazes), GameState (to call different functions based on game states) and the main class.|
 
 
-## UML:
-[UML-MazeGame](https://github.com/takhat/mazegame_capstone/files/10738050/Untitled.Diagram.drawio-2.pdf)
-
-
-
 
