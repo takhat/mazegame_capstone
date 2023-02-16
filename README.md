@@ -1,5 +1,6 @@
 # Capstone Project: Maze Game
 
+## [Project Demo](https://www.youtube.com/watch?v=A_Uipit5XBs)
 
 ## Instructions:
 
